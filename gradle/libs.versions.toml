@@ -1,0 +1,66 @@
+[versions]
+agp = "8.8.2"
+kotlin = "2.0.10"
+coreKtx = "1.15.0"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+lifecycleRuntimeKtx = "2.8.7"
+activityCompose = "1.10.1"
+composeBom = "2025.02.00"
+coilCompose = "2.7.0"
+coroutines = "1.9.0"
+koin = "3.2.0"
+moshi = "1.15.0"
+okhttp = "4.12.0"
+retrofit = "2.9.0"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+#Okhttp
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+logging_interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+#Retrofit
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit_mock = { group = "com.squareup.retrofit2", name = "retrofit-mock", version.ref = "retrofit" }
+retrofit_converter_moshi = { group = "com.squareup.retrofit2", name = "converter-moshi", version.ref = "retrofit" }
+#Mosh
+moshi_codegen = { group = "com.squareup.moshi", name = "moshi-kotlin-codegen", version.ref = "moshi" }
+moshi = { group = "com.squareup.moshi", name = "moshi", version.ref = "moshi" }
+moshi_adapters = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshi" }
+moshi_kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+#Koin
+koin_core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin_android_compat = { group = "io.insert-koin", name = "koin-android-compat", version.ref = "koin" }
+#Coil
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+coil-gif-compose = { module = "io.coil-kt:coil-gif", version.ref = "coilCompose" }
+#Coroutines
+kotlinx_coroutines_core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+kotlinx_coroutines_android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+
+[bundles]
+moshi = ["moshi_codegen", "moshi", "moshi_adapters", "moshi_kotlin"]
+retrofit = ["retrofit", "retrofit_mock", "retrofit_converter_moshi"]
+okhttp = ["okhttp", "logging_interceptor"]
+koin = ["koin_core", "koin_android", "koin_android_compat"]
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
