@@ -14,6 +14,7 @@ koin = "3.2.0"
 moshi = "1.15.0"
 okhttp = "4.12.0"
 retrofit = "2.9.0"
+navigationCompose = "2.8.9"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -46,18 +47,21 @@ moshi_kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.re
 koin_core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
 koin_android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
 koin_android_compat = { group = "io.insert-koin", name = "koin-android-compat", version.ref = "koin" }
+koin_view_model = {group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin"}
+
 #Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 coil-gif-compose = { module = "io.coil-kt:coil-gif", version.ref = "coilCompose" }
 #Coroutines
 kotlinx_coroutines_core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx_coroutines_android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
 [bundles]
 moshi = ["moshi_codegen", "moshi", "moshi_adapters", "moshi_kotlin"]
 retrofit = ["retrofit", "retrofit_mock", "retrofit_converter_moshi"]
 okhttp = ["okhttp", "logging_interceptor"]
-koin = ["koin_core", "koin_android", "koin_android_compat"]
+koin = ["koin_core", "koin_android", "koin_android_compat", "koin_view_model"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
