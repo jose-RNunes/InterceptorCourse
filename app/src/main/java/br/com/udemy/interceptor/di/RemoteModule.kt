@@ -44,6 +44,7 @@ private const val SIGNED_RETROFIT = "SIGNED_RETROFIT"
 
 val remoteModule = module {
     single { MoshiConfig.build() }
+    single<InterceptorCache> { InterceptorCacheImpl() }
     single(named(SIGNED_OK_HTTP)) { OkHttpConfig.provideSignedOkHttpClient() }
     single(named(OK_HTTP)) { OkHttpConfig.provideOKHttpClient() }
     single(named(RETROFIT)) {
