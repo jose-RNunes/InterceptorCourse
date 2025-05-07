@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -53,6 +54,8 @@ dependencies {
     implementation(libs.bundles.retrofit)
     implementation(libs.bundles.okhttp)
     implementation(libs.bundles.koin)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.navigation.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
