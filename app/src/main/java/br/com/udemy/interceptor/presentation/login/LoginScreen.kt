@@ -80,6 +80,12 @@ fun LoginForm(
                 disabledContainerColor = Color.White
             ),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next),
+            supportingText = {
+                if(state.userNameInvalid) {
+                    Text(text = "Campo usuário é obrigatório!")
+                }
+            },
+            isError = state.userNameInvalid,
             onValueChange = { newText ->
                 userName.value = newText
             }
@@ -103,6 +109,12 @@ fun LoginForm(
                 imeAction = ImeAction.Done
             ),
             visualTransformation = PasswordVisualTransformation(),
+            supportingText = {
+                if(state.passwordInvalid) {
+                    Text(text = "Campo senha é obrigatório!")
+                }
+            },
+            isError = state.passwordInvalid,
             keyboardActions = KeyboardActions(
                 onDone = {
                     loginAction.invoke(LoginAction.Login(userName.value, password.value))

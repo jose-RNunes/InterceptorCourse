@@ -6,7 +6,9 @@ data class LoginState(
     val showLoading: Boolean = false,
     val showErrorMessage: String? = null,
     val authModel: AuthModel? = null,
-    val authSuccess: Boolean = false
+    val authSuccess: Boolean = false,
+    val userNameInvalid: Boolean = false,
+    val passwordInvalid: Boolean = false
 ) {
     fun showError() = showErrorMessage != null && showLoading.not()
 }

@@ -4,11 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.udemy.interceptor.data.remote.response.ErrorResponse
 import br.com.udemy.interceptor.domain.usecase.LoginUseCase
-import br.com.udemy.interceptor.presentation.chacaters.CharacterState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -18,18 +16,35 @@ class LoginViewModel(private val loginUseCase: LoginUseCase) : ViewModel() {
     val state = _state.asStateFlow()
 
     fun dispatchAction(action: LoginAction) {
-        when(action) {
+        when (action) {
             is LoginAction.Login -> {
                 login(action.userName, action.password)
             }
+
             LoginAction.OnNavigateSuccess -> _state.update { it.copy(authSuccess = false) }
         }
     }
 
     private fun login(userName: String, password: String) {
+
+        if (userName.isEmpty() || password.isEmpty()) {
+            _state.update {
+                it.copy(
+                    userNameInvalid = userName.isEmpty(),
+                    passwordInvalid = password.isEmpty()
+                )
+            }
+
+            return
+        }
+
         viewModelScope.launch {
             _state.update {
-                it.copy(showLoading = true)
+                it.copy(
+                    showLoading = true,
+                    userNameInvalid = false,
+                    passwordInvalid = false
+                )
             }
             loginUseCase(userName, password)
                 .catch { error ->
