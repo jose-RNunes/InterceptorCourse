@@ -5,21 +5,26 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -37,19 +42,12 @@ import br.com.udemy.interceptor.presentation.login.LoginAction
 import br.com.udemy.interceptor.presentation.login.LoginScreen
 import br.com.udemy.interceptor.presentation.login.LoginViewModel
 import br.com.udemy.interceptor.ui.theme.InterceptorCourseTheme
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.compose.koinViewModel
-import org.koin.androidx.compose.viewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.KoinApplication
-import org.koin.core.context.KoinContext
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         enableEdgeToEdge()
         setContent {
             InterceptorCourseTheme {
@@ -99,9 +97,17 @@ private fun NavGraphBuilder.charactersScreen(navController: NavHostController) {
 
         val state by viewModel.state.collectAsState()
 
-        CharacterScreen(state = state) { action ->
-            viewModel.dispatchAction(action)
-        }
+        AppBar(
+            title = "Personagens",
+            onNavigateBack = {
+                navController.popBackStack()
+            },
+            content = {
+                CharacterScreen(state = state) { action ->
+                    viewModel.dispatchAction(action)
+                }
+            }
+        )
 
         LaunchedEffect(Unit) {
             viewModel.dispatchAction(CharactersAction.GetCharacters)
@@ -130,7 +136,15 @@ private fun NavGraphBuilder.characterDetailScreen(navController: NavHostControll
 
         val state by viewModel.state.collectAsState()
 
-        CharacterDetailScreen(state = state)
+        AppBar(
+            title = state.character?.name.orEmpty(),
+            onNavigateBack = {
+                navController.popBackStack()
+            },
+            content = {
+                CharacterDetailScreen(state = state)
+            }
+        )
 
         LaunchedEffect(id) {
             viewModel.dispatchAction(CharacterDetailAction.GetCharacter(id))
@@ -138,22 +152,33 @@ private fun NavGraphBuilder.characterDetailScreen(navController: NavHostControll
     }
 }
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun teste() {
-    Column {
-        Text("Olá")
+private fun AppBar(
+    title : String,
+    onNavigateBack: () -> Unit,
+    content: @Composable ColumnScope.() -> Unit = {},
+) {
+    Column(modifier = Modifier.fillMaxSize()) {
+        TopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = Color.White,
+            ),
+            title = {
+                Text(title)
+            },
+            navigationIcon = {
+                IconButton(onClick = onNavigateBack) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Localized description",
+                        tint = Color.White
+                    )
+                }
+            }
+        )
 
-        Spacer(modifier = Modifier.weight(1f))
-
-        Text("Mundo")
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    InterceptorCourseTheme {
-        teste()
+        content.invoke(this)
     }
 }
